@@ -1,8 +1,16 @@
 import React from 'react'
-import { List, Datagrid, TextField, EmailField, BooleanField } from 'react-admin'
+import { Filter, TextInput, BooleanInput, List, Datagrid, TextField, EmailField, BooleanField } from 'react-admin'
+
+const UserFilter = (props) => (
+    <Filter {...props}>
+        <TextInput label="Name" source="name" />
+        <TextInput label="E-mail" source="email" />
+        <BooleanInput label="Disabled" source="disabled" />
+    </Filter>
+)
 
 export const UserList = props => (
-  <List {...props}>
+  <List {...props} filters={<UserFilter />}>
     <Datagrid rowClick='edit'>
       <TextField source='id' />
       <TextField source='name' />
