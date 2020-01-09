@@ -3,6 +3,7 @@ import { Filter, TextInput, BooleanInput, List, Datagrid, TextField, EmailField,
 
 const UserFilter = (props) => (
     <Filter {...props}>
+        <TextInput label="Search" source="q" alwaysOn />
         <TextInput label="Name" source="name" />
         <TextInput label="E-mail" source="email" />
         <BooleanInput label="Disabled" source="disabled" />
