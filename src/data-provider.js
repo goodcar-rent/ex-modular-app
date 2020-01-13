@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import {
   GET_LIST,
   GET_ONE,
@@ -10,8 +11,9 @@ import {
   fetchUtils
 } from 'react-admin'
 import { stringify } from 'query-string'
+import { Headers } from 'node-fetch'
 
-const API_URL = 'http://localhost:3005'
+export const ApiUrl = 'http://localhost:3005'
 
 /**
  * @param {String} type One of the constants appearing at the top of this file, e.g. 'UPDATE'
@@ -24,7 +26,7 @@ const convertDataProviderRequestToHTTP = (type, resource, params) => {
   const options = { method: 'GET' }
 
   if (token) {
-    options.headers = new Headers({ 'Authorization': `Bearer ${token}` })
+    options.headers = new Headers({ Authorization: `Bearer ${token}` })
   }
 
   switch (type) {
@@ -36,15 +38,15 @@ const convertDataProviderRequestToHTTP = (type, resource, params) => {
         range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),
         filter: JSON.stringify(params.filter)
       }
-      return { url: `${API_URL}/${resource}?${stringify(query)}`, options }
+      return { url: `${ApiUrl}/${resource}?${stringify(query)}`, options }
     }
     case GET_ONE:
-      return { url: `${API_URL}/${resource}/${params.id}`, options }
+      return { url: `${ApiUrl}/${resource}/${params.id}`, options }
     case GET_MANY: {
       const query = {
         filter: JSON.stringify({ id: params.ids })
       }
-      return { url: `${API_URL}/${resource}?${stringify(query)}`, options }
+      return { url: `${ApiUrl}/${resource}?${stringify(query)}`, options }
     }
     case GET_MANY_REFERENCE: {
       const { page, perPage } = params.pagination
@@ -54,25 +56,25 @@ const convertDataProviderRequestToHTTP = (type, resource, params) => {
         range: JSON.stringify([(page - 1) * perPage, (page * perPage) - 1]),
         filter: JSON.stringify({ ...params.filter, [params.target]: params.id })
       }
-      return { url: `${API_URL}/${resource}?${stringify(query)}`, options }
+      return { url: `${ApiUrl}/${resource}?${stringify(query)}`, options }
     }
     case UPDATE:
       options.method = 'PUT'
       options.body = JSON.stringify(params.data)
-      return { url: `${API_URL}/${resource}/${params.id}`, options }
+      return { url: `${ApiUrl}/${resource}/${params.id}`, options }
     case CREATE:
       options.method = 'POST'
       options.body = JSON.stringify(params.data)
-      return { url: `${API_URL}/${resource}`, options }
+      return { url: `${ApiUrl}/${resource}`, options }
     case DELETE:
       options.method = 'DELETE'
-      return { url: `${API_URL}/${resource}/${params.id}`, options }
+      return { url: `${ApiUrl}/${resource}/${params.id}`, options }
     case DELETE_MANY:
       options.method = 'DELETE'
       const query = {
         filter: JSON.stringify({ ...params.filter, ids: params.ids })
       }
-      return { url: `${API_URL}/${resource}?${stringify(query)}`, options }
+      return { url: `${ApiUrl}/${resource}?${stringify(query)}`, options }
 
     default:
       throw new Error(`Unsupported fetch action type ${type}`)

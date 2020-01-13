@@ -1,7 +1,7 @@
 import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK, AUTH_GET_PERMISSIONS } from 'react-admin'
 import fetch from 'node-fetch'
 
-const API_URL = 'http://localhost:3005'
+import { ApiUrl } from './data-provider'
 
 export default (type, params) => {
   if (type === AUTH_LOGIN) {
@@ -12,7 +12,7 @@ export default (type, params) => {
       headers: { 'Content-Type': 'application/json' }
     }
 
-    return fetch(`${API_URL}/auth/login`, options)
+    return fetch(`${ApiUrl}/auth/login`, options)
       .then(response => {
         if (response.status < 200 || response.status >= 300) {
           throw new Error(response.statusText)
@@ -26,7 +26,7 @@ export default (type, params) => {
   }
   // called when the user clicks on the logout button
   if (type === AUTH_LOGOUT) {
-    // return fetch(`${API_URL}/auth/logout`, options)
+    // return fetch(`${ApiUrl}/auth/logout`, options)
     //   .then(response => {
     //     if (response.status < 200 || response.status >= 300) {
     //       throw new Error(response.statusText)

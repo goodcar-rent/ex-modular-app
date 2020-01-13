@@ -1,17 +1,24 @@
 import React from 'react'
 import { Admin, Resource, Login } from 'react-admin'
-import dataProvider from './ra-data-goodcar-rent'
+import dataProvider from './data-provider'
 import { UserList } from './resources/users'
 import { UserGroupCreate, UserGroupEdit, UserGroupList } from './resources/user-groups'
 import UserIcon from '@material-ui/icons/Person'
 import UserGroupIcon from '@material-ui/icons/Group'
 import Dashboard from './dashboard'
 import authProvider from './auth-provider'
+import customRoutes from './custom-routes'
 
 const MyLoginPage = () => <Login backgroundImage='https://loremflickr.com/1024/768/city,car' />
 
 const App = () => (
-  <Admin dashboard={Dashboard} authProvider={authProvider} dataProvider={dataProvider} loginPage={MyLoginPage}>
+  <Admin
+    dashboard={Dashboard}
+    authProvider={authProvider}
+    dataProvider={dataProvider}
+    loginPage={MyLoginPage}
+    customRoutes={customRoutes}
+  >
     <Resource
       name='user'
       options={{ label: 'Users' }}
