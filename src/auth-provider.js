@@ -1,8 +1,39 @@
-import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK, AUTH_GET_PERMISSIONS } from 'react-admin'
-import fetch from 'node-fetch'
+// import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK, AUTH_GET_PERMISSIONS } from 'react-admin'
+import fetch, { Request, Headers } from 'node-fetch'
 
 import { ApiUrl } from './data-provider'
 
+const authProvider = {
+  login: ({ username, password }) => {
+    const request = new Request(`${ApiUrl}/auth/login`, {
+      method: 'POST',
+      body: JSON.stringify({ email: username, password }),
+      headers: new Headers({ 'Content-Type': 'application/json' })
+    })
+    return fetch(request)
+      .then(response => {
+        if (response.status < 200 || response.status >= 300) {
+          throw new Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then(({ token }) => {
+        window.localStorage.setItem('token', token)
+      })
+  },
+  logout: () => {
+    window.localStorage.removeItem('token')
+    return Promise.resolve()
+  },
+  checkError: () => Promise.resolve(),
+  checkAuth: () =>
+    window.localStorage.getItem('token') ? Promise.resolve() : Promise.reject(Error('no auth')),
+  getPermissions: () => Promise.reject(Error('Unknown method'))
+}
+
+export default authProvider
+
+/*
 export default (type, params) => {
   if (type === AUTH_LOGIN) {
     const { username, password } = params
@@ -55,3 +86,4 @@ export default (type, params) => {
   }
   return Promise.reject(new Error('Unknown method'))
 }
+*/
