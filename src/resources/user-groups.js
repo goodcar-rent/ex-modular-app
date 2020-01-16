@@ -43,7 +43,7 @@ export const UserGroupList = props => (
           <ChipField source='name' />
         </SingleFieldList>
       </ReferenceArrayField>
-      <EditButton />>
+      <EditButton />
     </Datagrid>
   </List>
 )

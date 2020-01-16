@@ -5,7 +5,15 @@ import {
   SimpleForm, required,
   TextInput,
   Datagrid,
-  TextField
+  TextField,
+  ReferenceField,
+  SelectField,
+  DateField,
+  EditButton,
+  DateInput,
+  ReferenceInput,
+  AutocompleteInput,
+  SelectInput
 } from 'react-admin'
 
 const DeployProjectFilter = (props) => (
@@ -51,6 +59,58 @@ export const DeployProjectEdit = props => (
       <TextInput disabled label='Id' source='id' />
       <TextInput source='name' validate={required()} />
       <TextInput source='fullName' options={{ fullWide: true }} validate={required()} />
+    </SimpleForm>
+  </Edit>
+)
+
+// ------- EVENT ---------
+const DeployEventTypes = [
+  { id: 0, name: '(unknown)' },
+  { id: 1, name: '(ERROR)' },
+  { id: 2, name: 'Github' },
+  { id: 3, name: 'Webhook' }
+]
+
+export const DeployEventList = props => (
+  <List {...props} title='Deploy events' filters={<DeployProjectFilter />}>
+    <Datagrid rowClick='edit'>
+      <DateField source='createdAt' label='CreatedAt' />
+      <SelectField source='type' choices={DeployEventTypes} />
+      <TextField source='caption' label='Caption' />
+      <TextField source='commit' label='Commit' />
+      <TextField source='branch' label='Branch' />
+      <ReferenceField label='Project' source='projectId' reference='DeployProject'>
+        <TextField source='name' />
+      </ReferenceField>
+      <EditButton />
+    </Datagrid>
+  </List>
+)
+
+const DeployProjectEventTitle = ({ record }) => {
+  return <span>Deploy event {record ? `"${record.caption}"` : ''}</span>
+}
+
+DeployProjectEventTitle.propTypes = {
+  record: PropTypes.shape({
+    caption: PropTypes.string
+  })
+}
+
+export const DeployEventEdit = props => (
+  <Edit title={<DeployProjectEventTitle />} {...props}>
+    <SimpleForm>
+      <TextInput source='id' label='Id' disabled />
+      <DateInput source='createdAt' />
+      <SelectInput source='type' choices={DeployEventTypes} />
+      <TextInput source='caption' />
+      <TextInput source='commit' />
+      <TextInput source='branch' />
+      <ReferenceInput label='Project' source='projectId' reference='DeployProject'>
+        <SelectInput source='name' />
+      </ReferenceInput>
+      <TextInput source='stdout' multiline />
+      <TextInput source='stderr' multiline />
     </SimpleForm>
   </Edit>
 )
