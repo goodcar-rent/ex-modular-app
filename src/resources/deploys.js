@@ -12,7 +12,7 @@ import {
   EditButton,
   DateInput,
   ReferenceInput,
-  AutocompleteInput,
+  NumberInput,
   SelectInput
 } from 'react-admin'
 
@@ -39,6 +39,8 @@ export const DeployProjectCreate = (props) => (
       <TextInput disabled label='Id' source='id' />
       <TextInput source='name' validate={required()} />
       <TextInput source='fullName' validate={required()} />
+      <TextInput source='script' validate={required()} />
+      <NumberInput source='scriptTimeout' />
     </SimpleForm>
   </Create>
 )
@@ -59,6 +61,8 @@ export const DeployProjectEdit = props => (
       <TextInput disabled label='Id' source='id' />
       <TextInput source='name' validate={required()} />
       <TextInput source='fullName' options={{ fullWide: true }} validate={required()} />
+      <TextInput source='script' validate={required()} />
+      <NumberInput source='scriptTimeout' />
     </SimpleForm>
   </Edit>
 )
