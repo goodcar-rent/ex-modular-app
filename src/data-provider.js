@@ -13,7 +13,9 @@ import {
 import { stringify } from 'query-string'
 import { Headers } from 'node-fetch'
 
-export const ApiUrl = 'http://localhost:3005'
+export const ApiUrl = process.env.REACT_APP_API_PATH
+console.log('API PATH')
+console.log(ApiUrl)
 
 /**
  * @param {String} type One of the constants appearing at the top of this file, e.g. 'UPDATE'
