@@ -15,6 +15,14 @@ import {
   NumberInput,
   SelectInput
 } from 'react-admin'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles({
+  wide: {
+    width: '45%',
+    minWidth: '251px'
+  }
+})
 
 const DeployProjectFilter = (props) => (
   <Filter {...props}>
@@ -24,24 +32,31 @@ const DeployProjectFilter = (props) => (
 )
 
 export const DeployProjectList = props => (
-  <List {...props} title='Deploy Projects' filters={<DeployProjectFilter />}>
+  <List {...props} title='Deploy projects' filters={<DeployProjectFilter />}>
     <Datagrid rowClick='edit'>
-      <TextField source='id' />
       <TextField source='name' />
       <TextField source='fullName' />
     </Datagrid>
   </List>
 )
 
-export const DeployProjectCreate = (props) => (
-  <Create {...props}>
-    <SimpleForm>
-      <TextInput disabled label='Id' source='id' />
+const DeployProjectForm = (props) => {
+  const classes = useStyles()
+
+  return (
+    <SimpleForm {... props}>
+      <TextInput source='id' label='Id' disabled className={classes.wide} />
       <TextInput source='name' validate={required()} />
-      <TextInput source='fullName' validate={required()} />
-      <TextInput source='script' validate={required()} />
+      <TextInput source='fullName' className={classes.wide} validate={required()} />
+      <TextInput source='script' className={classes.wide} validate={required()} />
       <NumberInput source='scriptTimeout' />
     </SimpleForm>
+  )
+}
+
+export const DeployProjectCreate = (props) => (
+  <Create {...props}>
+    <DeployProjectForm />
   </Create>
 )
 
@@ -57,13 +72,7 @@ DeployProjectEditTitle.propTypes = {
 
 export const DeployProjectEdit = props => (
   <Edit title={<DeployProjectEditTitle />} {...props}>
-    <SimpleForm fullWide>
-      <TextInput disabled label='Id' source='id' />
-      <TextInput source='name' validate={required()} />
-      <TextInput source='fullName' fullWidth validate={required()} />
-      <TextInput source='script' fullWidth validate={required()} />
-      <NumberInput source='scriptTimeout' />
-    </SimpleForm>
+    <DeployProjectForm />
   </Edit>
 )
 

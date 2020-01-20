@@ -2,7 +2,7 @@ import React from 'react'
 import { Admin, Resource, Login, Layout, AppBar } from 'react-admin'
 import { useSelector } from 'react-redux'
 import dataProvider from './data-provider'
-import { UserList, UserCreate } from './resources/users'
+import { UserList, UserCreate, UserEdit } from './resources/users'
 import { UserGroupCreate, UserGroupEdit, UserGroupList } from './resources/user-groups'
 
 import UserIcon from '@material-ui/icons/Person'
@@ -54,7 +54,7 @@ const App = () => (
   >
     <Resource
       name='DeployProject'
-      options={{ label: 'Deploy Projects' }}
+      options={{ label: 'Deploy projects' }}
       list={DeployProjectList}
       icon={AccountTreeIcon}
       edit={DeployProjectEdit}
@@ -72,6 +72,7 @@ const App = () => (
       options={{ label: 'Users' }}
       list={UserList}
       create={UserCreate}
+      edit={UserEdit}
       icon={UserIcon}
     />
     <Resource

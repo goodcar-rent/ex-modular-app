@@ -1,8 +1,15 @@
 import React from 'react'
-import { List, Datagrid, TextField, ReferenceArrayField, SelectField,
+import {
+  List, Datagrid, TextField, ReferenceArrayField, SelectField,
   SingleFieldList, ChipField, Edit, Create, SimpleForm,
-  SelectInput, ReferenceArrayInput, SelectArrayInput, TextInput,
-  EditButton } from 'react-admin'
+  SelectInput, ReferenceArrayInput, SelectArrayInput, TextInput
+} from 'react-admin'
+import PropTypes from 'prop-types'
+
+import { makeStyles } from '@material-ui/core/styles'
+import { FormStyles } from './form-styles'
+
+const useStyles = makeStyles(FormStyles)
 
 const systemTypeNone = null
 const systemTypeAdmin = 'Admin'
@@ -33,9 +40,8 @@ const UserGroupFilter = (props) => (
 */
 
 export const UserGroupList = props => (
-  <List {...props} /* filters={<UserGroupFilter />} */ >
-    <Datagrid>
-      <TextField source='id' label='Id' />
+  <List title='User groups' {...props}/* filters={<UserGroupFilter />} */>
+    <Datagrid rowClick='edit'>
       <TextField source='name' label='Name' />
       <SelectField source='systemType' choices={choices} translateChoice={false} />
       <ReferenceArrayField source='users' label='Users' reference='user'>
@@ -43,7 +49,6 @@ export const UserGroupList = props => (
           <ChipField source='name' />
         </SingleFieldList>
       </ReferenceArrayField>
-      <EditButton />
     </Datagrid>
   </List>
 )
@@ -52,27 +57,34 @@ const UserGroupTitle = ({ record }) => {
   return <span>User Group {record ? `"${record.name}"` : ''}</span>
 }
 
-export const UserGroupEdit = props => (
-  <Edit title={<UserGroupTitle />} {...props}>
-    <SimpleForm>
-      <TextInput source='id' disabled />
-      <TextInput source='name' />
-      <SelectInput source='systemType' choices={choices} translateChoice={false} />
-      <ReferenceArrayInput source='users' label='Users' reference='user'>
+UserGroupTitle.propTypes = {
+  record: PropTypes.shape({
+    name: PropTypes.string
+  })
+}
+
+const UserGroupForm = (props) => {
+  const classes = useStyles()
+
+  return (
+    <SimpleForm {... props}>
+      <TextInput source='id' label='Id' className={classes.wide35} disabled />
+      <TextInput source='name' label='Name' className={classes.wide35} />
+      <SelectInput source='systemType' className={classes.wide35} choices={choices} translateChoice={false} />
+      <ReferenceArrayInput source='users' label='Users' className={classes.wide50} reference='user'>
         <SelectArrayInput source='name' />
       </ReferenceArrayInput>
     </SimpleForm>
+  )
+}
+export const UserGroupEdit = props => (
+  <Edit title={<UserGroupTitle />} {...props}>
+    <UserGroupForm />
   </Edit>
 )
 
 export const UserGroupCreate = props => (
   <Create {...props}>
-    <SimpleForm>
-      <TextInput source='name' />
-      <SelectInput source='systemType' choices={choices} translateChoice={false} />
-      <ReferenceArrayInput source='users' label='Users' reference='user'>
-        <SelectArrayInput source='name' />
-      </ReferenceArrayInput>
-    </SimpleForm>
+    <UserGroupForm />
   </Create>
 )
