@@ -1,5 +1,6 @@
 import React from 'react'
 import { Admin, Resource, Login, Layout, AppBar } from 'react-admin'
+import { useSelector } from 'react-redux'
 import dataProvider from './data-provider'
 import { UserList, UserCreate } from './resources/users'
 import { UserGroupCreate, UserGroupEdit, UserGroupList } from './resources/user-groups'
@@ -13,6 +14,10 @@ import Dashboard from './forms/dashboard'
 import authProvider from './auth-provider'
 import MyMenu from './ui/my-menu'
 import { Route } from 'react-router-dom'
+import themeReducer from './theme-reducer'
+import { darkTheme, lightTheme } from './themes'
+import { ThemeName } from './actions'
+
 import {
   DeployProjectList, DeployProjectCreate, DeployProjectEdit,
   DeployEventList, DeployEventEdit
@@ -20,7 +25,19 @@ import {
 
 const MyLoginPage = () => <Login backgroundImage='https://loremflickr.com/1024/768/city,car' />
 const MyAppBar = props => <AppBar {...props} userMenu={<MyMenu />} />
-const MyLayout = props => <Layout {...props} appBar={MyAppBar} />
+const MyLayout = props => {
+  const theme = useSelector((state) =>
+    state.theme === ThemeName.dark ? darkTheme : lightTheme
+  )
+
+  return (
+    <Layout
+      {...props}
+      appBar={MyAppBar}
+      theme={theme}
+    />
+  )
+}
 const MyRoutes = [
   <Route key='1' exact path='/signup' component={UserCreate} />
 ]
@@ -33,6 +50,7 @@ const App = () => (
     loginPage={MyLoginPage}
     layout={MyLayout}
     customRoutes={MyRoutes}
+    customReducers={{ theme: themeReducer }}
   >
     <Resource
       name='DeployProject'

@@ -60,8 +60,8 @@ export const DeployProjectEdit = props => (
     <SimpleForm fullWide>
       <TextInput disabled label='Id' source='id' />
       <TextInput source='name' validate={required()} />
-      <TextInput source='fullName' options={{ fullWide: true }} validate={required()} />
-      <TextInput source='script' validate={required()} />
+      <TextInput source='fullName' fullWidth validate={required()} />
+      <TextInput source='script' fullWidth validate={required()} />
       <NumberInput source='scriptTimeout' />
     </SimpleForm>
   </Edit>
@@ -113,8 +113,8 @@ export const DeployEventEdit = props => (
       <ReferenceInput label='Project' source='projectId' reference='DeployProject'>
         <SelectInput source='name' />
       </ReferenceInput>
-      <TextInput source='stdout' multiline />
-      <TextInput source='stderr' multiline />
+      <TextInput source='stdout' multiline fullWidth label='Console log:' />
+      <TextInput source='stderr' multiline fullWidth label='Error log:' />
     </SimpleForm>
   </Edit>
 )
