@@ -34,8 +34,10 @@ const DeployProjectFilter = (props) => (
 export const DeployProjectList = props => (
   <List {...props} title='Deploy projects' filters={<DeployProjectFilter />}>
     <Datagrid rowClick='edit'>
-      <TextField source='name' />
-      <TextField source='fullName' />
+      <TextField source='name' label='Repo' />
+      <TextField source='fullName' label='Full repo' />
+      <TextField source='branch' label='Branch' />
+      <TextField source='site' label='Site' />
     </Datagrid>
   </List>
 )
@@ -46,10 +48,14 @@ const DeployProjectForm = (props) => {
   return (
     <SimpleForm {... props}>
       <TextInput source='id' label='Id' disabled className={classes.wide} />
-      <TextInput source='name' validate={required()} />
-      <TextInput source='fullName' className={classes.wide} validate={required()} />
-      <TextInput source='script' className={classes.wide} validate={required()} />
-      <NumberInput source='scriptTimeout' />
+      <TextInput source='name' label='Repo' validate={required()} />
+      <TextInput source='fullName' label='Full repo' className={classes.wide} validate={required()} />
+      <TextInput source='script' label='Script' className={classes.wide} validate={required()} />
+      <NumberInput source='scriptTimeout' label='Script timeout' />
+      <TextInput source='branch' label='Branch' className={classes.wide} validate={required()} />
+      <TextInput source='site' label='Site' className={classes.wide} />
+      <TextInput source='siteConfigPath' label='Site config path' className={classes.wide} />
+      <TextInput source='siteConfig' label='Site config' fullWide multiline />
     </SimpleForm>
   )
 }
