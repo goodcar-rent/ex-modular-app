@@ -55,7 +55,7 @@ const DeployProjectForm = (props) => {
       <TextInput source='branch' label='Branch' className={classes.wide} validate={required()} />
       <TextInput source='site' label='Site' className={classes.wide} />
       <TextInput source='siteConfigPath' label='Site config path' className={classes.wide} />
-      <TextInput source='siteConfig' label='Site config' fullWide multiline />
+      <TextInput source='siteConfig' label='Site config' fullWidth multiline />
     </SimpleForm>
   )
 }
