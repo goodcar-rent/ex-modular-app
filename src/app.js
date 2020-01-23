@@ -1,7 +1,7 @@
 import React from 'react'
 import { Admin, Resource, Login, Layout, AppBar } from 'react-admin'
 import { useSelector } from 'react-redux'
-import dataProvider from './data-provider'
+import dataProvider from './core/data-provider'
 import { UserList, UserCreate, UserEdit } from './resources/users'
 import { UserGroupCreate, UserGroupEdit, UserGroupList } from './resources/user-groups'
 
@@ -11,12 +11,12 @@ import AccountTreeIcon from '@material-ui/icons/AccountTree'
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks'
 
 import Dashboard from './forms/dashboard'
-import authProvider from './auth-provider'
+import authProvider from './core/auth-provider'
 import MyMenu from './ui/my-menu'
 import { Route } from 'react-router-dom'
-import themeReducer from './theme-reducer'
-import { darkTheme, lightTheme } from './themes'
-import { ThemeName } from './actions'
+import themeReducer from './core/theme-reducer'
+import { darkTheme, lightTheme } from './core/themes'
+import { ThemeName } from './core/actions'
 
 import {
   DeployProjectList, DeployProjectCreate, DeployProjectEdit,

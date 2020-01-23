@@ -5,7 +5,7 @@ import CardContent from '@material-ui/core/CardContent'
 import CardHeader from '@material-ui/core/CardHeader'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
-import { CHANGE_THEME, ThemeName } from '../actions'
+import { CHANGE_THEME, ThemeName } from '../core/actions'
 
 const changeTheme = (theme) => ({
   type: CHANGE_THEME,
